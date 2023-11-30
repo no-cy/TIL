@@ -109,3 +109,126 @@ void doWork(Car c) {
 * instanceof 연산자를 사용하는 이유는 메서드 내에 변수 c가 어느 인스턴스를 참조하고 있는지 알 수가 없어 c가 가리키고 있는 인스턴스의 타입을 체크하고 적절한 형변환한 다음에 작업을 해주기 위함이다.
 * 만약, 매개 변수가 FireEngine 타입으로 선언되어 있고, Object클래스, Car클래스에 대한 instanceof 연산을 수행하면 true 가 반환된다.
 * 그 이유는 Object클래스와 Car클래스는 조상클래스이므로 조상의 멤버들을 상속 받았기 때문에, FireEngine인스턴스는 Object인스턴스와 Car인스턴스를 포함하고 있는 셈이기 때문이다. (매개변수 다형성)
+
+### 참조변수와 인스턴스의 연결
+* 조상 클래스에 선언된 멤버변수와 같은 이름의 인스턴스변수를 자손 클래스에서 중복으로 정의된 경우,
+  조상타입의 참조변수로 자손 인스턴스를 참조하는 경우와 자손타입의 참조변수로 자손 인스턴스를 참조하는 경우는 서로 다른 결과를 얻는다.
+```java
+class BindingTest {
+  public static void main(String[] args) {
+    Parent p = new Child();
+    Child  c = new Child();
+
+    System.out.println("p.x = " + p.x);
+    p.method();
+
+    System.out.println("c.x = " + c.x);
+    c.method();
+}
+
+class Parent {
+  int x = 100;
+
+  void method() {
+      System.out.println("Parent Method");
+  }
+}
+
+class Child extends Parent {
+  int x = 200;
+
+  void method() {
+      System.out.println("Child Method");
+  }
+}
+
+실행결과
+--------------
+p.x = 100
+Child Method
+c.x = 200
+Child Method
+--------------
+```
+* 소스에서 확인할 수 있듯이 Parent 타입의 c 참조변수는 Child 인스턴스를 참조하고 있지만 중복 정의된 x 멤버변수의 값을 호출했을 때, Parent 타입의 멤버변수가 사용되었다.
+* 오버라이딩된 method() 호출 시에는 참조하고 있는 Child 인스턴스의 멤버 메서드를 호출한다.
+* 이러한 경우는 조상 클래스의 멤버변수와 자손 클래스의 멤버변수가 중복된 정의된 경우에만 해당되고, 중복되지 않은 경우에는 해당되지 않는다.
+* 이러한 상황을 방지하기 위해서는 각 클래스의 정의된 멤버변수들을 private으로 정의하고 메서드를 통해서만 멤버변수를 접근하게 하면 된다.
+
+### 매개변수의 다형성
+```java
+class Product {
+  int price;                  // 제품의 가격
+  int bonusPoint;             // 제품구매 시 제공하는 보너스 점수
+}
+
+class Tv       extends Product { }
+class Computer extends Product { }
+class Audio    extends Product { }
+
+class Buyer {                  // 고객, 물건을 사는 사람
+  int money = 1000;            // 소유금액
+  int bonusPoint = 0;          // 보너스점수
+}
+
+void buy(Product p) {
+  money -= p.price;             // Buyer가 가진 돈(money)에서 제품의 가격(p.price)만큼 뺀다.
+  bonusPoint += p.bonusPoint;   // Buyer의 보너스점수(bonusPoint)에 제품의 보너스점수(p.bonusPoint)를 더한다.
+}
+```
+* void Buy(Porduct p)를 보면 매개변수를 조상 클래스 타입으로 하였다.
+* 매개변수의 타입을 조상 클래스 타입으로 할 경우 조상 클래스를 상속받은 자손 타입의 참조변수면 어느 것이나 매개변수로 받아들일 수 있다.
+* 만약 매개변수를 Object 클래스 타입으로 하게 되면 모든 타입의 참조변수를 매개변수로 받아들일 수 있다.
+> Object 클래스는 모든 클래스의 조상이므로 모든 타입의 참조변수들을 매개변수로 받아들일 수 있다.
+
+### 여러 종류의 객체를 배열로 다루기
+* 조상 타입의 참조변수 배열을 사용하면, 공통의 조상을 가진 서로 다른 종류의 객체를 배열로 묶어서 다룰 수 있다.
+* 또는, 묶어서 다루고싶은 객체들의 상속관계를 따져서 가장 가까운 공통조상 클래스 타입의 참조변수 배열을 생성해서 객체들을 저장하면 된다.
+```java
+class Product {
+  int price;                          // 제품의 가격
+  int bonusPoint;                     // 제품구매 시 제공하는 보너스 점수
+}
+
+class Tv       extends Product { }
+class Computer extends Product { }
+class Audio    extends Product { }
+
+class Buyer {                          // 고객, 물건을 사는 사람
+  int money = 1000;                    // 소유금액
+  int bonusPoint = 0;                  // 보너스점수
+  Proudct[] item = new Product[10];    // 구입한 제품을 저장하기 위한 배열
+  int i = 0;                           // Product배열 item에 사용할 index
+}
+
+void buy(Product p) {
+  if(money < p.price) {
+    System.out.println("잔액이 부족하여 물건을 살수 없습니다.");
+    return;
+  }
+
+  money -= p.price;                     // Buyer가 가진 돈(money)에서 제품의 가격(p.price)만큼 뺀다.
+  bonusPoint += p.bonusPoint;           // Buyer의 보너스점수(bonusPoint)에 제품의 보너스점수(p.bonusPoint)를 더한다.
+  item[i++] = p;                        // 제품을 Product[] item에 저장한다.
+  System.out.println(p + "을/를 구입하셨습니다.");
+}
+```
+* buy메서드에 'item[i++] = p;' 문장을 추가함으로써 물건을 구입하면, 배열 item에 저장되도록 한다.
+* 이로써 모든 제품클래스의 조상인 Product클래스 타입의 배열을 사용함으로써 구입한 제품을 하나의 배열로 간단하게 다룰 수 있게 된다.
+* Product배열로 구입한 제품들을 저장할 수 있도록 했지만, 배열의 크기를 10으로 했기 때문에 11개 이상의 제품을 구입할 수 없다.
+* 10개 이상의 배열의 크기를 알아서 관리해주길 원하면 Vector 클래스를 사용하면 된다.
+```java
+public class Vecotr extends AbastractList
+              implements List, Cloneable, java.io.Serializable {
+      protected Object elementData[];
+}
+```
+* Vector 클래스는 내부적으로 Object타입의 배열을 가지고 있어서, 이 배열에 객체를 추가하거나 제거할 수 있게 작성되어 있다.
+> Object타입의 배열을 가지고 있으므로 모든 참조변수 타입들을 담을 수 있다.
+* Vector의 주요 메서드로는 add(), remove(), get() 등이 있다.
+> boolean add(Object o)     : Vector에 객체를 추가한다. 추가에 성공하면 결과값으로 true, 실패하면 false를 반환한다.
+>
+> boolean remove(Object o)  : Vector에 저장되어 있는 객체를 제거한다. 제거에 성공하면 결과값으로 true, 실패하면 false를 반환한다.
+>
+> Object  get(int index)    : 지정된 위치(index)의 객체를 반환한다. 반환타입이 Object타입이므로 적절한 타입으로의 형변환이 필요하다.
+* get() 메서드를 호출하여 적절한 타입의 형변환을 한 후 instanceof 연산자를 사용하여 꼭 인스턴스의 실제 타입을 확인하여야 한다. 
