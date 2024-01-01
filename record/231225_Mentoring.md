@@ -31,8 +31,14 @@
 * 선언적 트랜잭션 관리, 로깅, 보안 등의 크로스컷팅 관심사를 처리해야하는데 매우 효과적
 
 ### Q. 컨트롤러 시점에서 Interceptor와 AOP의 차이점은 무엇일까 ?
-* Proxy 기술 사용 여부 &rarr; AOP에서 사용
-* **`하나는 답을 못했다.. 스크립트를 보면서 다시 한번 복습하자`**
+* AOP는 Proxy라는 기술을 사용하여 크로스 컷팅 관심사를 처리함.
+* **파라미터에 차이가 있음.**
+  * Interceptor는 HttpServletRequest, HttpServletResponse를 파라미터로 사용함.
+  * AOP는 JoinPoint, ProceedingJoinPoint를 파라미터로 사용
+* **주요 처리 관심사**
+  * Interceptor는 HTTP 요청의 전처리와 후처리, 특히 웹 애플리케이션의 요청 수준에 작동함.
+  * AOP는 애플리케이션의 비즈니스 로직 자체에 더 집중되어 있으며, 메서드 수준에서의 관심사를 중앙 집중화하여 관리함.
+
 
 
 ## 스프링 빈 생명주기
