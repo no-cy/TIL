@@ -21,7 +21,7 @@
 * UNDO 공간에 백업해두고 실제 레코드 값을 변경한다.
   * 백업된 데이터는 불필요하다고 판단하는 시점에 주기적으로 삭제한다.
   * Undo에 백업된 레코드가 많아지면서 MySQL 서버의 처리 성능이 떨어질 수 있다.
-* 이러한 변경 방식은 **MVCC(Mutli Version Concurrency Control)**라고 한다.
+* 이러한 변경 방식은 **MVCC(Mutli Version Concurrency Control)** 라고 한다.
 * `PHANTOM READ`가 발생할 수 있다. 이를 방지하기 위해서 쓰기 잠금을 걸어야 한다.
 > 참고 : `PHANTOM READ`란 다른 트랜잭션에서 수행한 변경 작업에 의해 레코드가 보였다가 안 보였다가 하는 현상
 
