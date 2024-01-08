@@ -74,3 +74,4 @@ suqash merge 기능을 어디 부분에서 사용할지만 결정하면 되겠�
 * 필터를 스프링 빈에 등록할 수 있는 이유와 스프링 기능을 사용 가능하게 된 이유
 * 스프링 트랜잭션 전파속성(Spring Transaction Propagation)
 * **스크립트 참고 후 추가 사항 있으면 작성 필요**
+* https://techblog.woowahan.com/2606/ (정독 !)
