@@ -1,47 +1,37 @@
-# 구매 시스템 및 결제 시스템 설계
+# [TIL] 2023.01.08 🧑🏻‍🏫
 
-**구체화 필요** 
-API 영역
-1. URL
-2. method 
-3. request parameter 
-   - 쿼리 파라미터 (URI?username=nocy)
-   - Body (Post 방식에서 body {username : nocy}
-   - path variable **(URI/{nocy})**
-4. response data
+### 1. 프로젝트 1차 설계 [(@v1_buy_system)](../project-design/contant/v1_buy_system_2023_01_08.md)
+* 작성한 ERD 토대로 리뷰 진행 [(@ERD)](../project-design/erd/v1_2023_01_08.svg) &rarr; ERD 이미지가 너무 작다.. 수정 필요
+* 상품(proudct) 테이블에 sale_start_date, sale_end_date date 타입 컬럼 추가
+---
+### 2. 프로젝트 REST API 설계 진행 필요
+* 멘토님께서 화면 공유로 직접 작성해 보라고 요청주셨지만 내가 제대로 작성하지 못해 멘토님께서 수정해 주셨다 🙇‍♂️ 
+* v1_buy_system_2023_01_08.md 파일을 기준으로 각 REST API 설계 진행해야 함
+```
+ex)
+전체 상품 조회 : GET /products
+특정 상품 조회 : GET /products/{product_id} (Path Variable)
+              GET /products?product_id=1 (Query Parameter)
 
-DB 영역 (MySQL, Postgres 부분적으로는 Redis 고민 필요) -> RDB 기반으로 설계 진행
-1. TABLE LIST
-2. TABLE PK, UK, FK (연관 관계만 표시 -> 1:n, n:n 등)
-3. 테이블, 컬럼 이름
-4. 컬럼 타입(null or not null), 사이즈 
-5. PK Sequense
+장바구니 조회 : GET /v1/me/carts
+장바구니 삭제 : DELETE /v1/me/carts/{cart_id}
+장바구니 담기 : POST /v1/me/carts/products/{product_id}
+```
+* 웹 서치를 통해 REST API 설계 양식 참고
 
-필수 : 12개 
-**회원** (user) 			
-* 회원가입 **(필수)** - POST
-* 로그인 **(필수)** - POST
-* 아이디 / 비밀번호 찾기 (Optional)
-* 회원정보 조회 **(필수)** - GET
-* 회원정보 변경 (비밀번호, 주소 등) **(필수)** - PUT
-* 회원탈퇴 **(필수)** - DELETE
+### 3. 싱글톤 패턴 수도 코드 작성
+* 수도 코드가 맞는지 모르겠지만.. 인텔리제이로 멘토님께 싱글톤 패턴에 대한 코드를 공유드렸다.
+```java
+public class SingletonService {
+    private static final SingletonService instance = new SingletonService();
 
-**상품** (product)
-* 상품 리스트 조회 **(필수)** - GET
-* 검색 **(필수)** - GET 
+    private SingletonService() {
+    }
 
-**장바구니** (cart)
-* 장바구니 담기 **(필수)** - POST
-* 장바구니 리스트 **(필수)**
-  * 조회 - GET
-  * 삭제 - DELETE
+    public static SingletonService getInstance() {
+        return instance;
+    }
+}
+```
 
-**주문** (order)
-* 주문하기 **(필수)** - POST
-* 주문 내역 조회 **(필수)** - GET
-* 다양한 결제 방법 (계좌이체, 신용카드, 온라인 뱅킹 등)
-* 취소 **(필수)** - PUT, PATCH
-
-**환불 / 교환**
-* 교환 및 반품 처리
-
+### 4. 
