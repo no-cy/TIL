@@ -59,6 +59,13 @@ Gitlab에 엔지니어들을 초대해서 이슈 등록에 대한 권한만 부�
 Q. release 브랜치는 리더급이 관리하는지?
 A. 그렇지않다.
 우리 회사는 각 팀원들끼리 돌아가면서 relase 브랜치를 생성하고 관리한다.
+
+Q. squash and merge 기능을 로컬 feature 브랜치에서 사용하는지?
+A. 꼭 그렇지만은 않다.
+팀끼리 논의해서 로컬 feature 브랜치에서 squash and merge 후 origin에 push를 할지,
+아니면 upstream/feature를 develop에 merge할 때에 squash and merge를 할지에 대한 방향은 팀에서 정해야 한다.
+squash and merge 기능 커밋 히스토리를 깔끔하게 정리되므로 사용하는 것을 추천한다.
+suqash merge 기능을 어디 부분에서 사용할지만 결정하면 되겠다.
 ```
 ---
 ### 6. 다음 멘토링 스터디 랩업에 대한 준비
