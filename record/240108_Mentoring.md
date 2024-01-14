@@ -38,8 +38,8 @@ public class SingletonService {
 * 준비한 내용으로 wrap-up을 잘 진행한 것 같다. (?)
 * ACID에 원자성(Atomicity)에 대해 조금 설명이 부족했던게 있었다.
   * **추가 : 모두 커밋되거나 모두 롤백되어야 한다는 특성이다.**
-* ACID 정리 : [ACID](../DB/acid.md)
-* Isolation Level 정리 : [Isolation Level](../isolation_level.md)
+* ACID 정리 : [ACID](../study/db/acid.md)
+* Isolation Level 정리 : [Isolation Level](../study/db/isolation_level.md)
 ---
 ### 5. git flow Q&A (실제로 이렇게 대화하지 않았다.. 참고 부탁 🙏)
 ```
