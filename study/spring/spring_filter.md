@@ -21,4 +21,4 @@
 ## Spring Boot 등장 이후
 * DelegatingFilterProxy는 **스프링**이기 때문에 필요한 것이지, **스프링 부트를 사용한다면 DelegatingFilterProxy도 필요없어진다.**
 * Spring Boot가 내장 웹 서버를 지원하면서 톰캣과 같은 서블릿 컨테이너까지 Spring Boot가 제어 가능하기 때문이다.
-* Spring Boot가 서블릿 필터의 구현체를 찾으면 DelegatingFilterProxy 없이 바로 **필터 체인(Filter Chain)**에 필터를 등록해 준다.
+* Spring Boot가 서블릿 필터의 구현체를 찾으면 DelegatingFilterProxy 없이 바로 **필터 체인(Filter Chain)** 에 필터를 등록해 준다.
