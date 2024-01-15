@@ -35,8 +35,8 @@ public void executeQuery() throws SQLException {
 ```
 ---
 ### 💡 트랜잭션의 종료
-* 하나의 트랜잭션이 시작하면 commit() 또는 rollback()이 호출될 때까지가 하나의 트랜잭션으로 묶인다.
-* 트랜잭션 시작을 선언하고 commit()또는 rollback()으로 트랜잭션을 종료하는 작업을 **트랜잭션의 경계설정**이라고 한다.
+* 하나의 트랜잭션이 시작하면 `commit()` 또는 `rollback()`이 호출될 때까지가 하나의 트랜잭션으로 묶인다.
+* 트랜잭션 시작을 선언하고 `commit()` 또는 `rollback()` 으로 트랜잭션을 종료하는 작업을 **트랜잭션의 경계설정**이라고 한다.
 * 트랜잭션 경계는 하나의 Connection을 통해 진행되므로 트랜잭션의 경계는 하나의 커넥션이 만들어지고 닫히는 범위 안에 존재한다.
 ```java
 public void executeQuery() throws SQLException {
@@ -55,7 +55,7 @@ public void executeQuery() throws SQLException {
 ```
 ---
 ### 💡 트랜잭션 전파 속성(Transaction Propagation)
-* Spring이 제공하는 선언적 트랜잭션(트랜잭션 어노테이션, @Transactional)의 장점 중 하나는 여러 트랜잭션을 묶어 커다란 하나의 트랜잭션 경계를 만들 수 있다는 점이다.
+* Spring이 제공하는 선언적 트랜잭션(트랜잭션 어노테이션, `@Transactional`)의 장점 중 하나는 여러 트랜잭션을 묶어 커다란 하나의 트랜잭션 경계를 만들 수 있다는 점이다.
 * 작업을 하다보면 기존에 트랜잭션이 진행중 일때 추가적인 트랜잭션을 진행해야 하는 경우가 있다.
 * **이미 트랜잭션이 진행 중일 때 추가 트랜잭션 진행을 어떻게 할지 결정하는 것**이 전파속성이다.
 * 전파속성에 따라 기존의 트랜잭션에 참여할 수도 있고, 별도의 트랜잭션으로 진행할 수도 있고, 에러를 발생시키는 등 여러 선택을 할 수 있다.
@@ -127,7 +127,7 @@ public void executeQuery() throws SQLException {
 
 **MANDATORY**
 * 의미 : 트랜잭션이 의무임(트랜잭션이 반드시 필요함)
-* 기존 트랜잭션 없음 : IllegalTransactionStateException 예외 발생
+* 기존 트랜잭션 없음 : `IllegalTransactionStateException` 예외 발생
 * 기존 트랜잭션 있음 : 기존 트랜잭션에 참여함
 
 **REQUIRED_NEW**
@@ -143,7 +143,7 @@ public void executeQuery() throws SQLException {
 **NEVER**
 * 의미 : 트랜잭션을 사용하지 않음(기존 트랜잭션도 허용하지 않음)
 * 기존 트랜잭션 없음 : 트랜잭션 없이 진행함
-* 기존 트랜잭션 있음 : IllegalTransactionStateException 예외 발생
+* 기존 트랜잭션 있음 : `IllegalTransactionStateException` 예외 발생
 
 **NESTED**
 * 의미 : 중첩(자식) 트랜잭션을 생성함
@@ -152,4 +152,4 @@ public void executeQuery() throws SQLException {
 
 > NESTED는 이미 진행 중인 트랜잭션에 중첩(자식) 트랜잭션을 만드는 것으로, 독립적인 트랜잭션을 만드는 REQUIRED_NEW와 다르다. NESTED에 의한 중첩 트랜잭션은 부모 트랜잭션의 영향(커밋과 롤백)을 받지만, 중첩 트랜잭션이 외부에 영향을 주지 않는다.  
 > 즉, 중첩 트랜잭션이 롤백되어도 외부 트랜잭션은 커밋이 가능하지만 외부 트랜잭션이 롤백되면 중첩 트랜잭션은 함께 롤백되는 것이다.
->NESTED는 JDBC의 savepoint 기능을 사용하는데, DB 드라이버가 이를 지원하는지 확인이 필요하며 JPA에서 사용이 불가능하다.
+>NESTED는 JDBC의 `savepoint` 기능을 사용하는데, DB 드라이버가 이를 지원하는지 확인이 필요하며 JPA에서 사용이 불가능하다.
