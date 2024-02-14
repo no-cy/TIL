@@ -12,7 +12,7 @@ class Solution {
                 return new int[] {map.get(complement), i};
             }
 
-            // K : 값, V : 인덱스
+            // (K:값, V:인덱스) HashMap에 추가
             map.put(nums[i], i);
         }
 
