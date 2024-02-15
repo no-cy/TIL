@@ -14,7 +14,9 @@ class Solution {
 
                 char openBracket = stack.peek();
                 
-                if ((openBracket == '(' && bracket == ')') || (openBracket == '[' && bracket == ']') || (openBracket == '{' && bracket == '}')) {
+                if ((openBracket == '(' && bracket == ')') || 
+                    (openBracket == '[' && bracket == ']') || 
+                    (openBracket == '{' && bracket == '}')) {
                     stack.pop();
                 } else {
                     return false;
