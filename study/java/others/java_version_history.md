@@ -35,5 +35,11 @@
 * 새로운 가비지 컬렉터, Shenandoah GC가 일반 사용으로 이동
 * Strong encapsulation of JDK internals을 기본으로 활성화하여 JDK 내부의 비공개 API 사용 제한
 
-### Java 21 (LTS 예정)
-* LTS 버전으로 예정되어 있으며, 현재(2023년 기준)까지의 정보로는 구체적인 변경 사항이나 추가 기능에 대한 자세한 정보를 제공하기 어렵습니다. Java 17 이후의 주요 개선 사항에 대해서는 최신 자료를 참조해야 합니다.
+### Java 21 (LTS)
+* 출시 연도: 2023년
+* SequencedCollection 인터페이스, Record 패턴 추가
+* Switch문 기능 추가
+ * 내부 null 처리
+ * when 키워드
+ * 인스턴스 타입 분기 
+* 가상 쓰레드 정식 포함
