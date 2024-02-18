@@ -37,9 +37,6 @@
 
 ### Java 21 (LTS)
 * 출시 연도: 2023년
-* SequencedCollection 인터페이스, Record 패턴 추가
-* Switch문 기능 추가
- * 내부 null 처리
- * when 키워드
- * 인스턴스 타입 분기 
+* SequencedCollection 인터페이스 추가
+* Record & Switch문 패턴 매칭 추가
 * 가상 쓰레드 정식 포함
