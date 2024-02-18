@@ -17,7 +17,7 @@
 
 ### Spring Framework 6
 * Java 17+ 기반으로 업그레이드, 최신 Java 기능 및 성능 개선 채택.
-* **Jakarta EE 9+**로의 전환, Servlet 6.0, JPA 3.1 등 최신 Jakarta EE 10 API 지원.
+* **Jakarta EE 9+** 로의 전환, Servlet 6.0, JPA 3.1 등 최신 Jakarta EE 10 API 지원.
 * Tomcat 10.1, Hibernate ORM 6.1 등 최신 웹 컨테이너 및 영속성 제공자 지원.
 * Ahead-Of-Time (AOT) 변환 기반 및 GraalVM 네이티브 이미지 지원 강화.
 * Project Loom의 가상 스레드와 Project CRaC의 체크포인트 복원 접근 방식 지원 예정.
