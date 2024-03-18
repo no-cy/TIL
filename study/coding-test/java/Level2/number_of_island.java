@@ -29,34 +29,58 @@ Output: 3
 // 1 <= m, n <= 300
 // grid[i][j] is '0' or '1'.
 
+// 개선 해야될 점:
+// visited를 사용하지 않고 체크하는 방법을 구현해보아야 함
 class Solution {
-    private Integer island;
-    private boolean[][] visited = new boolean[][];
-
-    public int dfs(char[][] grid, int row, int columns) {
-        
-        if (visited[row][columns] != true) {
-            visited[row][columns] = true;
-            
-            if (grid[row][columns] == '1') {
-                row++;
-                dfs(grid, row, columns);
-            } else {
-                columns++;
-                dfs(grid, row, columns);
-            }
-        } else {
-            
-        }
-
-    }
+    public Integer island = 0;
+    public boolean visited[][];
 
     public int numIslands(char[][] grid) {
-        int row;
-        int columns;
+        Integer row = 0, column = 0;
+        int m = grid.length;
+        if (m == 0) return 0;
+        int n = grid[0].length;
 
-        if (grid == null) return 0;
+        visited = new boolean[m][n];
+
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                visited[i][j] = false;
+            }
+        }
+
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                // System.out.println("i: " + i + " j: " + j);
+                island += dfs(grid, i, j);
+            }
+        }
+
+        return island;
+    }       
+
+    public Integer dfs(char[][] grid, Integer row, Integer column) {
+        // System.out.println("row: " + row + " column: " + column);
+        if (row < 0 ||
+            column < 0 ||
+            row == grid.length ||
+            column == grid[row].length ||
+            grid[row][column] == '0' ) {
+                return 0;
+            }
+
+        if (visited[row][column] == true) {
+            return 0;
+        }
+
+        visited[row][column] = true;
+        dfs(grid, row-1, column);
+        dfs(grid, row+1, column);
+        dfs(grid, row, column-1);
+        dfs(grid, row, column+1);
         
-        dfs(grid, row, columns);
+        return 1;
     }
-}
+} 
+
+
