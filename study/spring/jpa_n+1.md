@@ -12,12 +12,24 @@
 해결 방법으로는 Fetch Join, EntityGraph 어노테이션, Batch Size 등의 방법이 있다.
 
 **Fetch Join**  
-연관된 엔티티를 한 번의 쿼리로 함께 조회하는 기능이다.  **`JOIN FETCH`** 구문을 사용하여 연관 엔티티를 즉시 로딩하도록 쿼리를 작성한다. 지연 로딩으로 설정된 연관 엔티티에 대해 별도의 쿼리를 실행하지 않고, 원본 엔티티를 조회할 때 연관 엔티티를 함께 조회하여 N+1 문제를 해결한다.
-
+연관된 엔티티를 한 번의 쿼리로 함께 조회하는 기능이다. **`JOIN FETCH`** 구문을 사용하여 연관 엔티티를 즉시 로딩하도록 쿼리를 작성한다. 지연 로딩으로 설정된 연관 엔티티에 대해 별도의 쿼리를 실행하지 않고, 원본 엔티티를 조회할 때 연관 엔티티를 함께 조회하여 N+1 문제를 해결한다.
+```sql
+SELECT p FROM Post p JOIN FETCH p.comments WHERE p.id = :postId
+```
 **EntityGraph**  
 **`@NamedEntityGraph`** 어노테이션을 사용하여 엔티티를 조회할 때 어떤 연관 엔티티를 함께 로딩할지 정의할 수 있다. 
-
+```java
+@Entity
+@NamedEntityGraph(name = "Post.comments", attributeNodes = @NamedAttributeNode("comments"))
+public class Post {
+    // ...
+}
+```
 **Batch Size**  
 지연 로딩을 사용할 때 연관 엔티티를 조회하는 쿼리의 수를 줄이기 위해 사용할 수 있는 설정이다. `@BatchSize` 어노테이션을 사용하여 한 번에 로드할 연관 엔티티의 수를 지정할 수 있다.
-
+```java
+@OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+@BatchSize(size = 10)
+private Set<Comment> comments;
+```
 
