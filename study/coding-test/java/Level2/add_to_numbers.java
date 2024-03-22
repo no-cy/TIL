@@ -9,6 +9,35 @@
  * }
  */
 
+// 리팩토링 후
+class Solution {
+    int carry = 0;
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if (l1 == null && l2 == null) {
+            if (carry == 0) {
+                return null;
+            }
+            ListNode result = new ListNode(carry);
+            carry = 0; // 재사용을 위해 carry를 리셋
+            return result;
+        }
+
+        int sum = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + carry;
+        carry = sum / 10;
+        ListNode result = new ListNode(sum % 10);
+
+        // 다음 노드로 재귀 호출
+        ListNode next1 = l1 != null ? l1.next : null;
+        ListNode next2 = l2 != null ? l2.next : null;
+        result.next = addTwoNumbers(next1, next2);
+
+        return result;
+    }
+}
+
+
+// 리팩토링 전
 class Solution {
     int carry = 0;
 
@@ -62,3 +91,6 @@ class Solution {
         return value;
     }
 }
+
+
+
