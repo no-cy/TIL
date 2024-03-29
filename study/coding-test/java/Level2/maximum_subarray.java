@@ -32,5 +32,44 @@ class Solution {
 //    3. 오른쪽 부분 배열에서 최대 부분 배열 합을 찾습니다.
 //    4. 두 부분 배열의 경계에 걸쳐 있는 부분 배열에서 최대 합을 찾습니다.
 //    5. 이 세 값 중 최대값이 전체 배열의 최대 부분 배열 합이 됩니다.
+// chatGPT 풀이
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+        return maxSubArrayHelper(nums, 0, nums.length - 1);
+    }
 
-// .. 풀이 진행 중
+    private int maxSubArrayHelper(int[] nums, int left, int right) {
+        if (left == right) return nums[left]; // 기저 조건
+
+        int mid = left + (right - left) / 2;
+        int leftMax = maxSubArrayHelper(nums, left, mid); // 왼쪽 부분 배열의 최대 합
+        int rightMax = maxSubArrayHelper(nums, mid + 1, right); // 오른쪽 부분 배열의 최대 합
+        int crossMax = maxCrossingSum(nums, left, mid, right); // 중앙을 걸친 최대 합
+
+        return Math.max(Math.max(leftMax, rightMax), crossMax); // 세 값 중 최대값 반환
+    }
+
+    private int maxCrossingSum(int[] nums, int left, int mid, int right) {
+        int leftSum = Integer.MIN_VALUE;
+        int rightSum = Integer.MIN_VALUE;
+        int sum = 0;
+
+        // 중앙에서 왼쪽으로 가면서 최대 합 계산
+        for (int i = mid; i >= left; i--) {
+            sum += nums[i];
+            if (sum > leftSum) leftSum = sum;
+        }
+
+        sum = 0;
+        // 중앙에서 오른쪽으로 가면서 최대 합 계산
+        for (int i = mid + 1; i <= right; i++) {
+            sum += nums[i];
+            if (sum > rightSum) rightSum = sum;
+        }
+
+        // 왼쪽 최대 합과 오른쪽 최대 합을 더함
+        return leftSum + rightSum;
+    }
+}
+
