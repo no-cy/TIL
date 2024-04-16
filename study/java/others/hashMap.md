@@ -7,7 +7,8 @@
 - 인덱스를 통해 데이터에 접근할 수 있다. (시간복잡도: **O(1)**)
 
 ### **HashMap 충돌**
-Key는 문자부터 숫자까지 무한대에 가까운 값을 생성할 수 있지만, 인덱스는 작은 정수형으로 한정되어 있다. 그러므로 key 충돌이 불가피하다. 서로 다른 key 들이 동일한 인덱스를 부여받는 현상이 생긴다.
+- Key는 문자부터 숫자까지 무한대에 가까운 값을 생성할 수 있지만, 인덱스는 작은 정수형으로 한정되어 있어 인덱스 충돌이 불가피하다.
+- 서로 다른 key 들이 동일한 인덱스를 부여받는 현상이 생긴다.
 
 Java에서는 HashMap 충돌을 2가지 방안으로 관리한다.
 
@@ -30,7 +31,7 @@ final Node<K, V>[] resize() {
         }
 
         if ((newCap = oldCap << 1) < 1073741824 && oldCap >= 16) {
-            newThr = oldThr << 1;           // 새로운 임계점 생성
+            newThr = oldThr << 1;           	// 새로운 임계점 생성
         }
     } else if (oldThr > 0) {
     	    newCap = oldThr;
@@ -46,7 +47,7 @@ final Node<K, V>[] resize() {
 	}
 
 	this.threshold = newThr;
-	Node<K, V>[] newTab = new Node[newCap]; // 사이즈 갱신된 버킷 생성
+	Node<K, V>[] newTab = new Node[newCap];   // 사이즈 갱신된 버킷 생성
 
 	...
 ```
@@ -82,7 +83,7 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
                 if ((e = ((Node)p).next) == null) {
                     ((Node)p).next = this.newNode(hash, key, value, (Node)null);
                     if (binCount >= 7) {
-					// 노드 생성 임계점을 넘어 Red-Black Tree 저장방식으로 변경
+			// 노드 생성 임계점을 넘어 Red-Black Tree 저장방식으로 변경
                         this.treeifyBin(tab, hash);
                     }
                     break;
@@ -110,7 +111,7 @@ final void treeifyBin(Node<K, V>[] tab, int hash) {
             TreeNode<K, V> tl = null;
 
             do {
-				// Node 객체를 TreeNode로 전환
+		// Node 객체를 TreeNode로 전환
                 TreeNode<K, V> p = this.replacementTreeNode(e, (Node)null);
                 if (tl == null) {
                     hd = p;
@@ -123,7 +124,7 @@ final void treeifyBin(Node<K, V>[] tab, int hash) {
             } while((e = e.next) != null);
 
             if ((tab[index] = hd) != null) {
-				// Red-Black Tree 로직을 위한 적절한 데이터를 TreeNode 필드 안에 채움
+		// Red-Black Tree 로직을 위한 적절한 데이터를 TreeNode 필드 안에 채움
                 hd.treeify(tab);
             }
         }
