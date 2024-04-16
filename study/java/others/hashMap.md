@@ -54,8 +54,10 @@ final Node<K, V>[] resize() {
 
 ### **Red-Black Tree**
 - 초기에 인덱스가 충돌하면 LinkedList 방식으로 충돌을 제어한다.
-- 버킷이 가리키고 있는 Node 객체는 next 필드를 가지고 있는데, 생성된 인덱스가 충돌할 때마다 Next가 가르키는 노드가 많아져 효율이 많이 떨어진다. -> **시간복잡도가 O(n)이 된다.**
-- 충돌횟수가 임계점(TREEIFY-THRESHOLD)를 넘게되면 데이터 저장방식이 변경되는데, 이것이 바로 **Red-Black Tree**이다. -> **treeifyBin 메서드를 호출한다.**
+- 버킷이 가리키고 있는 Node 객체는 next 필드를 가지고 있는데, 생성된 인덱스가 충돌할 때마다 Next가 가르키는 노드가 많아져 효율이 많이 떨어진다.  
+  -> **시간복잡도가 O(n)이 된다.**
+- 충돌횟수가 임계점(TREEIFY-THRESHOLD)를 넘게되면 데이터 저장방식이 변경되는데, 이것이 바로 **Red-Black Tree**이다.  
+  -> **treeifyBin 메서드를 호출한다.**
 
 ```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
