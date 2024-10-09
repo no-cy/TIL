@@ -1,5 +1,6 @@
 /*
-  -- 추가 테스트 케이스에서 통과하지 못해 코드 수정 필요
+- 중심 확장 알고리즘 사용
+- 중심이 되는 문자에서 왼쪽과 오른쪽이 대칭 구조이여야기 때문에 중심 확장 알고리즘을 사용하였음
 */
 class Solution {
     private String currentAnswer = "";
@@ -12,36 +13,26 @@ class Solution {
         }
         
         for (int i = 0; i < s.length(); i++) {
-            char word = s.charAt(i);
-        
-            for (int j = i + 1; j < s.length(); j++) {
-                System.out.println("word: " + word + ", compare: " + s.charAt(j));
-
-                if (word != s.charAt(j)) {
-                    continue;
-                }
-
-                System.out.println("i: " + i + ", j: " + j);
-                String forwardString = s.substring(i, j + 1);
-                String backwardString = new StringBuilder(forwardString).reverse().toString();
-
-                if (forwardString.equals(backwardString)) {
-                    if (forwardString.length() > currentAnswer.length()) {
-                        currentAnswer = forwardString;
-                        i += j;
-                        break;
-                    }
-                }
-                
-                // System.out.println("forwardString: " + forwardString);    
-                // System.out.println("backwardString: " + backwardString);
-            }
-        }
-
-        if (currentAnswer.length() == 0) {
-            currentAnswer = s.charAt(0) + "";
+            char ch = s.charAt(i);
+            // 홀수 중심 찾기: bab 인 경우
+            expandAroundCenter(s, i, i);
+            // 짝수 중심 찾기: baab 인 경우도 있을 수 있으니 짝수도 검사해주어야 함
+            expandAroundCenter(s, i, i + 1);
         }
 
         return currentAnswer;  
+    }
+
+    // 중심을 잡고 왼쪽과 오른쪽으로 확장하여 문자열이 회문(대칭)인지 확인
+    public void expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            String extractString = s.substring(left, right + 1);
+            if (extractString.length() > currentAnswer.length()) {
+                currentAnswer = extractString;
+            }
+
+            left--;
+            right++;
+        }
     }
 }
