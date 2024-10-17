@@ -33,7 +33,7 @@ class Solution {
                     int nextNode = nextElement[0];
                     int nextDist = nextElement[1] + dist;
 
-                    if (nextDist > nodeDist[nextNode]) continue;
+                    if (nextDist >= nodeDist[nextNode]) continue;
 
                     // System.out.println("node: " + nextNode + ", dist: " + nextDist);
                     nodeDist[nextNode] = nextDist;
