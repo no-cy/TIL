@@ -8,7 +8,9 @@ class Solution {
         int maxLength = 0;
 
         for (int right = 0; right < s.length(); right++) {
-
+            // s.charAt(right)의 중복 문자가 제거될 때까지 left의 범위를 증가시킴
+            // 중복 문자가 없는 상태에서 최대 문자열의 길이를 구해야 하므로, 추가된 문자 순서로 삭제하여 중복 제거
+            // 중복이 해결될 경우 다시 right 범위를 증가시킴
             while (window.contains(s.charAt(right))) {
                 window.remove(s.charAt(left));
                 left++;
